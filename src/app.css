@@ -1,3 +1,27 @@
-@import 'tailwindcss';
-@plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/typography';
+/* @import 'tailwindcss'; */
+/* @plugin '@tailwindcss/forms'; */
+/* @plugin '@tailwindcss/typography'; */
+
+html,
+body {
+	height: 100%;
+	margin: 0;
+}
+body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+#main-content {
+	flex: 1 0 auto;
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+}
+footer {
+	flex-shrink: 0;
+	background-color: #f8f9fa;
+	padding: 1rem 0;
+	text-align: center;
+	font-size: 0.9rem;
+	color: #6c757d;
+}
