@@ -1,3 +1,21 @@
+<script lang="ts">
+	import Pagination from '$lib/components/pagination.svelte';
+	import { ExternalLinkIcon } from 'lucide-svelte';
+	import { Btc, Eth, Usdt, Usdc, Bnb, Abt, Trx } from 'svelte-cryptocurrency-icons';
+
+	const { data } = $props();
+
+	const icons: Record<string, any> = {
+		btc: Btc,
+		eth: Eth,
+		usdt: Usdt,
+		usdc: Usdc,
+		bnb: Bnb,
+		abt: Abt,
+		trx: Trx
+	};
+</script>
+
 <section class="py-5">
 	<div class="container">
 		<h1 class="display-5 fw-bold mb-3">Faucet Catalog 🔍</h1>
@@ -6,7 +24,6 @@
 			and daily limits to find the best faucet for your needs.
 		</p>
 
-		<!-- Advertising placeholder -->
 		<div
 			class="rounded-3 bg-secondary bg-opacity-10 d-flex justify-content-center align-items-center mb-5 border"
 			style="height: 150px;"
@@ -30,103 +47,43 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>
-									<a
-										href="https://testnet-ton-faucet.example"
-										target="_blank"
-										rel="noopener noreferrer"
-										class="text-decoration-none"
-									>
-										TON Testnet Faucet
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											class="ms-1"
-											width="16"
-											height="16"
-											fill="currentColor"
-											viewBox="0 0 24 24"
-											aria-hidden="true"
+							{#each data.faucets.rows as faucet}
+								<tr>
+									<td>
+										<a
+											href={faucet.url}
+											target="_blank"
+											rel="noopener noreferrer"
+											class="text-decoration-none d-flex align-items-center"
 										>
-											<path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3z" />
-											<path d="M5 5h5v2H6.41l9.3 9.29-1.42 1.42L5 6.41V11H3V5z" />
-										</svg>
-									</a>
-								</td>
-								<td>1000 TON</td>
-								<td>15 min</td>
-								<td>
-									<img
-										src="https://cryptologos.cc/logos/ton-token.svg?v=024"
-										alt="TON"
-										title="TON"
-										width="20"
-										height="20"
-										class="me-1"
-									/>
-								</td>
-								<td><span class="badge bg-success">Active</span></td>
-								<td>★★★★☆</td>
-							</tr>
-
-							<tr>
-								<td>
-									<a
-										href="https://eth-faucet.example"
-										target="_blank"
-										rel="noopener noreferrer"
-										class="text-decoration-none"
-									>
-										Ethereum Faucet
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											class="ms-1"
-											width="16"
-											height="16"
-											fill="currentColor"
-											viewBox="0 0 24 24"
-											aria-hidden="true"
-										>
-											<path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3z" />
-											<path d="M5 5h5v2H6.41l9.3 9.29-1.42 1.42L5 6.41V11H3V5z" />
-										</svg>
-									</a>
-								</td>
-								<td>500 ETH</td>
-								<td>30 min</td>
-								<td>
-									<img
-										src="https://cryptologos.cc/logos/ethereum-eth.svg?v=024"
-										alt="ETH"
-										title="Ethereum"
-										width="20"
-										height="20"
-										class="me-1"
-									/>
-								</td>
-								<td><span class="badge bg-secondary">Inactive</span></td>
-								<td>★★★☆☆</td>
-							</tr>
-
-							<!-- Добавить больше строк по мере необходимости -->
+											{faucet.name}&nbsp;
+											<ExternalLinkIcon size={12} />
+										</a>
+									</td>
+									<td>{faucet.dailyLimit || 'no limit'}</td>
+									<td>{faucet.claimIntervalMinutes || 'unknown'}</td>
+									<td>
+										{#each faucet.supportedCryptos.split(',') as coin}
+											{@const Component = icons[coin.toLowerCase()]}
+											<span class="d-flex align-items-center gap-1 me-2">
+												<Component size={14} />
+												{coin}
+											</span>
+										{/each}
+									</td>
+									<td><span class="badge bg-success">Active</span></td>
+									<td>
+										{Array.from({ length: 5 }, (_, idx) => {
+											return idx >= faucet.rating ? '☆' : '★';
+										}).join('')}
+									</td>
+								</tr>
+							{/each}
 						</tbody>
 					</table>
 				</div>
 
-				<!-- Pager -->
-				<nav aria-label="Page navigation" class="mt-4">
-					<ul class="pagination justify-content-center mb-0">
-						<li class="page-item disabled">
-							<a class="page-link" href="#" tabindex="-1" aria-disabled="true">&laquo; Prev</a>
-						</li>
-						<li class="page-item active" aria-current="page">
-							<a class="page-link" href="#">1</a>
-						</li>
-						<li class="page-item"><a class="page-link" href="#">2</a></li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#">Next &raquo;</a></li>
-					</ul>
-				</nav>
+				<Pagination totalPages={data.faucets.totalPages} page={data.faucets.page} />
 			</div>
 
 			<!-- Filters (right) -->

@@ -3,3 +3,14 @@
 - []  Сделать защиту с помощью рекапчи
 - [] Сделать форму добавления фосета
 - [] Добавить рекламу
+
+
+
+
+https://faucet.triangleplatform.com/
+https://www.bnbchain.org/en/testnet-faucet
+https://faucet.quicknode.com/binance-smart-chain/bnb-testnet
+https://tokentool.bitbond.com/faucet/bsc-testnet
+https://faucet.chainstack.com/bnb-testnet-faucet
+
+https://www.faucethub.org/

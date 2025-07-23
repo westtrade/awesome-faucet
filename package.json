@@ -38,6 +38,7 @@
 	"dependencies": {
 		"@neondatabase/serverless": "^0.10.4",
 		"drizzle-orm": "^0.40.0",
-		"lucide-svelte": "^0.525.0"
+		"lucide-svelte": "^0.525.0",
+		"svelte-cryptocurrency-icons": "^1.0.4"
 	}
 }
